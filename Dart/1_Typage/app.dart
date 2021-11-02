@@ -6,6 +6,7 @@ void main() {
   varriableFixe = 13;
 
   final textUser = readText("Le texte ?");
+  textUser = "ici";
 
   var texte = "je suis ton texte";
   texte = "12";

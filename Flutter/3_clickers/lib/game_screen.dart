@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:clickers/model/game_result.dart';
 import 'package:flutter/material.dart';
 
 class GameScreen extends StatefulWidget {
@@ -15,6 +16,7 @@ class _GameScreenState extends State<GameScreen> {
   int _record = 0;
   String _CurrentPlayer = "";
   String _CurrentPlayerRecord = "";
+  final List<GameResult> _resultList = [];
 
   var _formKey = GlobalKey<FormState>();
 
@@ -40,6 +42,8 @@ class _GameScreenState extends State<GameScreen> {
         _record = _nbClic;
         _CurrentPlayerRecord = _CurrentPlayer;
       }
+      _resultList.add(GameResult(_CurrentPlayer, _nbClic));
+
       _nbClic = 0;
       _isClicked = false;
     });
@@ -51,11 +55,22 @@ class _GameScreenState extends State<GameScreen> {
     });
   }
 
+  Widget _createLigneRecord(BuildContext context, int numeroDeLigne) {
+    final result = _resultList[numeroDeLigne];
+    return Row(
+      children: [
+        Text(result.prenom),
+        const Icon(Icons.military_tech_sharp),
+        Text("${result.score} points"),
+      ],
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Clicker"),
+        title: const Text("Clicker"),
         centerTitle: true,
       ),
       body: SafeArea(
@@ -66,9 +81,17 @@ class _GameScreenState extends State<GameScreen> {
               Text(
                   "Score max depuis le lancement de l'app ! $_record de $_CurrentPlayerRecord"),
             Text("Nombre de clics : $_nbClic"),
+            if (!_isClicked)
+              Expanded(
+                child: ListView.builder(
+                  itemBuilder: _createLigneRecord,
+                  itemCount: _resultList.length,
+                ),
+              ),
             if (_isClicked)
-              IconButton(onPressed: __addClicks, icon: Icon(Icons.plus_one)),
-            Spacer(),
+              IconButton(
+                  onPressed: __addClicks, icon: const Icon(Icons.plus_one)),
+            const Spacer(),
             if (!_isClicked)
               //OutlinedButton(onPressed: _changeButton, child: Text("Commencer a compter")),
               Form(
@@ -77,7 +100,7 @@ class _GameScreenState extends State<GameScreen> {
                   children: [
                     Expanded(
                       child: TextFormField(
-                        initialValue: "Ted",
+                        initialValue: _CurrentPlayer,
                         decoration: const InputDecoration(
                             helperText: "Entrez votre prénom",
                             hintText: "Prénom"),
@@ -93,7 +116,7 @@ class _GameScreenState extends State<GameScreen> {
                     ),
                     ElevatedButton(
                         onPressed: _changeButton,
-                        child: Text("Commencer a compter")),
+                        child: const Text("Commencer a compter")),
                   ],
                 ),
               ),

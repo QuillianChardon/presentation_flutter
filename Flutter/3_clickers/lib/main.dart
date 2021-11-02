@@ -1,3 +1,4 @@
+import 'package:clickers/list_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -18,6 +19,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
+      //home: ListeView(),
       home: GameScreen(),
       //home: const Accueil(),
     );

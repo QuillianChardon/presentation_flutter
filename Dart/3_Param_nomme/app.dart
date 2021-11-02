@@ -2,8 +2,8 @@
 
 void main() {
   //Exemple1();
-  Exemple2();
-  //Exemple3();
+  //Exemple2();
+  Exemple3();
 }
 
 //EXEMPLE 1
