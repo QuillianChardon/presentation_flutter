@@ -1,5 +1,6 @@
 import 'package:clickers/asynchrone.dart';
 import 'package:clickers/list_view.dart';
+import 'package:clickers/webservice.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -21,7 +22,8 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
       //home: ListeView(),
-      home: Asynchrone(),
+      //home: Asynchrone(),
+      home: WebService(),
       //home: GameScreen(),
       //home: const Accueil(),
     );
