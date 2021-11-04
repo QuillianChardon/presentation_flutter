@@ -15,7 +15,39 @@ class WebService extends StatefulWidget {
 class _WebServiceState extends State<WebService> {
   Widget myBuilder(BuildContext context, AsyncSnapshot<dynamic> snapshot) {
     if (snapshot.hasData) {
-      return Text(snapshot.data.email);
+      return ListView.builder(
+          itemCount: snapshot.data.length,
+          itemBuilder: (context, userIndex) {
+            final user = snapshot.data[userIndex];
+            return Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Row(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Container(
+                        width: 150,
+                        height: 150,
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          image: DecorationImage(
+                              image:
+                                  NetworkImage('https://picsum.photos/300/300'),
+                              fit: BoxFit.fill),
+                        ),
+                      ),
+                    ),
+                    Column(
+                      children: [
+                        Text("Id : ${user.id}"),
+                        Text("Nom : ${user.name}"),
+                        Text("Email : ${user.email}"),
+                      ],
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                    ),
+                  ],
+                ));
+          });
     } else if (snapshot.hasError) {
       return Text("Erreur de chargement");
     } else {
@@ -23,11 +55,14 @@ class _WebServiceState extends State<WebService> {
     }
   }
 
-  Future<User> _fetchData() async {
-    var url = Uri.parse("https://jsonplaceholder.typicode.com/users/1");
+  Future<List<User>> _fetchData() async {
+    var url = Uri.parse("https://jsonplaceholder.typicode.com/users");
     final response = await http.get(url);
     if (response.statusCode == 200) {
-      return User.fromJSON(jsonDecode(response.body));
+      final List userJsonList = jsonDecode(response.body);
+      return userJsonList
+          .map((userJsonMap) => User.fromJSON(userJsonMap))
+          .toList(); // utilisation de la fonction map pour faire de chaque case du tableau un reel objet user
     } else {
       throw Exception("Erreur de chargement des données");
     }
@@ -38,7 +73,7 @@ class _WebServiceState extends State<WebService> {
     return Scaffold(
       appBar: AppBar(),
       body: Center(
-        child: FutureBuilder<User>(
+        child: FutureBuilder<List<User>>(
           builder: myBuilder,
           future: _fetchData(),
         ),
