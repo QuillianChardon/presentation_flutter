@@ -71,7 +71,11 @@ class _WebServiceState extends State<WebService> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        title: Center(
+          child: Text("Mon application"),
+        ),
+      ),
       body: Center(
         child: FutureBuilder<List<User>>(
           builder: myBuilder,

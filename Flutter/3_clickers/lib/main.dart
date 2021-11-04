@@ -20,6 +20,11 @@ class MyApp extends StatelessWidget {
       title: 'Flutter Demo',
       theme: ThemeData(
         primarySwatch: Colors.blue,
+        brightness: Brightness.light,
+      ),
+      darkTheme: ThemeData(
+        brightness: Brightness.dark,
+        primarySwatch: Colors.orange,
       ),
       //home: ListeView(),
       //home: Asynchrone(),
