@@ -1,3 +1,4 @@
+import 'package:clickers/assets_manager.dart';
 import 'package:clickers/asynchrone.dart';
 import 'package:clickers/list_view.dart';
 import 'package:clickers/webservice.dart';
@@ -28,8 +29,8 @@ class MyApp extends StatelessWidget {
       ),
       //home: ListeView(),
       //home: Asynchrone(),
-      home: WebService(),
-      //home: GameScreen(),
+      // home: WebService(),
+      home: GameScreen(),
       //home: const Accueil(),
     );
   }
@@ -64,7 +65,13 @@ class _AccueilState extends State<Accueil> {
       appBar: AppBar(),
       body: Column(
         children: [
-          Text("Prénom : $_prenom"),
+          FutureBuilder<String>(
+            future:
+                Assets.loadTextFile("text_files/lorem.txt", context: context),
+            builder: (context, snapshot) {
+              return Text(snapshot.hasData ? snapshot.data ?? "" : "");
+            },
+          ),
           Form(
             key: _formKey,
             child: Row(
@@ -88,7 +95,7 @@ class _AccueilState extends State<Accueil> {
                     icon: const Icon(Icons.check))
               ],
             ),
-          )
+          ),
         ],
       ),
     );
