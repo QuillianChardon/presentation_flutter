@@ -1,0 +1,4 @@
+{
+    "game_start_button": "Commencer a compter",
+    "point_record": "Score max depuis le lancement de l'app ! {record} de {CurrentPlayerRecord}"
+}

@@ -1,9 +1,11 @@
 import 'package:clickers/assets_manager.dart';
 import 'package:clickers/asynchrone.dart';
+import 'package:clickers/generated/l10n.dart';
 import 'package:clickers/list_view.dart';
 import 'package:clickers/webservice.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 
 import 'game_screen.dart';
 
@@ -32,6 +34,12 @@ class MyApp extends StatelessWidget {
       // home: WebService(),
       home: GameScreen(),
       //home: const Accueil(),
+      localizationsDelegates: [
+        S.delegate,
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate
+      ],
+      supportedLocales: S.delegate.supportedLocales,
     );
   }
 }

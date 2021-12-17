@@ -1,7 +1,10 @@
 import 'dart:async';
+import 'dart:developer';
 
+import 'package:clickers/generated/l10n.dart';
 import 'package:clickers/model/game_result.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class GameScreen extends StatefulWidget {
   const GameScreen({Key? key}) : super(key: key);
@@ -17,6 +20,9 @@ class _GameScreenState extends State<GameScreen> {
   String _CurrentPlayer = "";
   String _CurrentPlayerRecord = "";
   final List<GameResult> _resultList = [];
+
+  String en = 'en';
+  String fr = 'fr';
 
   var _formKey = GlobalKey<FormState>();
 
@@ -78,8 +84,7 @@ class _GameScreenState extends State<GameScreen> {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             if (_record != 0)
-              Text(
-                  "Score max depuis le lancement de l'app ! $_record de $_CurrentPlayerRecord"),
+              Text(S.current.point_record(_record, _CurrentPlayerRecord)),
             Text("Nombre de clics : $_nbClic"),
             if (!_isClicked)
               Expanded(
@@ -116,7 +121,18 @@ class _GameScreenState extends State<GameScreen> {
                     ),
                     ElevatedButton(
                         onPressed: _changeButton,
-                        child: const Text("Commencer a compter")),
+                        child: Text(S.of(context).game_start_button)),
+                    ElevatedButton(
+                      onPressed: () {
+                        setState(() {
+                          if (Intl.getCurrentLocale() == fr)
+                            S.load(const Locale('en'));
+                          if (Intl.getCurrentLocale() == en)
+                            S.load(const Locale('fr'));
+                        });
+                      },
+                      child: const Text('GERMAN'),
+                    ),
                   ],
                 ),
               ),
